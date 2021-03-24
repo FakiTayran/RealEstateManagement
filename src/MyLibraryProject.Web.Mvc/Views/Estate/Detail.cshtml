@@ -1,0 +1,131 @@
+﻿@model Estate
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<div class="m-5">
+    <div class="row">
+        <div class="col-md-6 bg-info text-center" style="border-radius:5px">
+            @if (Model.EstatePictures.Count != 0)
+            {
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        @if (Model.EstatePictures.Count > 1)
+                        {
+                            @for (int i = 1; i < Model.EstatePictures.Count; i++)
+                            {
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            }
+                        }
+                    </ol>
+                    <div class="carousel-inner mt-5">
+                        @foreach (var picture in Model.EstatePictures)
+                        {
+                            <div class="carousel-item @(picture == Model.EstatePictures.First() ? "active" : "")">
+                                <img src="@picture.ImageUrl" alt="#" style="height:auto; width:800px">
+                            </div>
+                        }
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <img src="~/img/600px-No_image_available.svg.png" alt="Not Available Photos" style="height:auto; width:500px" />
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <div class="container text-center bg-info" style="border-radius:5px" id="printable">
+                <div class="d-flex">
+                    <h1 class="display-4">Property Detail</h1>
+                    <div class="text-right ml-5 mt-3"><button class="btn btn-dark btn-sm" id="print" onclick="printDiv()"><i class="fas fa-print fa-2x"></i></button></div>
+                </div>
+                <div class="text-center">
+                    <div class="form-group">
+                        <label for="PropertType" class="m-1 form-control"><b>Property ID : @Model.Id</b></label>
+                    </div>
+                    @if (Model.Owner != null)
+                    {
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Name : @Model.Owner.Name</b></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Surname : @Model.Owner.Surname</b></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Phone : @Model.Owner.Phone</b></label>
+                        </div>
+                        <div class="form-group ">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Email : @Model.Owner.Email</b></label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Name : </b></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Surname : </b></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Phone : </b></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="WarmingType" class="m-1 form-control"><b>Owner Email : </b></label>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label for="PropertType" class="m-1 form-control"><b>Property Type : @Model.PropertyType</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="SquareMeter" class="m-1 form-control"><b>Square Meter : @Model.SquareMeter M2</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="NumberOfRooms" class="m-1 form-control"><b>Number Of Rooms : @Model.NumberOfRooms Rooms</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="FloorLocation" class="m-1 form-control"><b>Floor Location: @Model.FloorLocation .Floor</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="BuildingFloor" class="m-1 form-control"><b>Building Floor : @Model.BuildingFloor Floor</b></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="WarmingType" class="m-1 form-control"><b>Warming Type : @Model.WarmingType</b></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        function printDiv() {
+
+            var printable = document.getElementById('printable');
+
+            var newWin = window.open('', 'Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">' + printable.innerHTML + '</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function () { newWin.close(); }, 10);
+        }
+    </script>
+
+}

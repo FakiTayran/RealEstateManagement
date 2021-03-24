@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Upload Picture Page";
+}
+
+<div class="text-center">
+    <h4>@ViewBag.EstateIdAndOwnerNameSurname</h4>
+</div>
+
+<form asp-action="Upload" asp-controller="EstateImages" class="dropzone" enctype="multipart/form-data">
+    <input type="hidden" name="estateId" value="@ViewBag.EstateId" />
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+    </div>
+</form>
